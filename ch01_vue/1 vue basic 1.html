@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue intro</title>
+    <script src="../js/jquery-3.5.1.js"></script>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <!-- {{}}插值表达式 -->
+        <!-- v-cloak -->
+        <!-- v-text -->
+        <!-- v-html -->
+        <!-- v-bind 单向绑定-->
+        <!-- v-on -->
+        <!-- v-model 双向绑定, 绑定到value，一个标签只能绑定一个-->
+        <p>{{message}}大家好</p>
+        <p v-text="message">他好我也好</p>
+        <p v-html="htmlText"></p>
+        <p v-text="htmlText"></p>
+        <input type="button" v-bind:value="buttonText" v-on:click="clickMe">
+        <input type="button" :value="buttonText" @click="clickMeTwice">
+        <p>{{message}}</p>
+        <input type="text" :value="message">
+        <input type="text" v-model="message">
+        <br>
+        <input type="text" v-model="score">
+        <input type="range" v-model="score" min="0" :max="maxValue">
+        <br>
+        <select v-model="maxValue">
+            <option value="100">100</option>
+            <option value="1000">1000</option>
+            <option value="10000">10000</option>
+        </select>
+    </div>
+</body>
+</html>
+<!-- 2 vue-->
+<!-- MVVM (M:Model, V:View, VM:ViewModel)-->
+<script>
+    // setInterval(() => {      
+    // }, 0);
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                message:"Hello World",
+                htmlText:"<b>我是加粗文本</b>",
+                buttonText:"我是按钮",
+                score:50,
+                maxValue:100
+            },
+            methods:{
+                clickMe(){
+                    //alert('点我干吗...');
+                    this.buttonText = "被点的按钮";
+                },
+                clickMeTwice(){
+                    this.buttonText = "我是按钮";
+                }
+            }
+        });  
+</script>
+
+<!-- 1 js template-->
+<!-- <script type="text/x-jsrender" id="jsr">
+    <div id="app">
+        <p>{{:username}}</p>
+    </div>
+</script>
+<script>
+    $(function(){
+        var res = new {username="Robert"};
+        var htmlText = $('#jsr').render(res);
+        $('#app').append(htmlText);
+
+        $('#btn').prop("value","我是按钮");
+    });
+</script> -->
+<style>
+    [v-cloak]{
+        display: none;
+    }
+</style>

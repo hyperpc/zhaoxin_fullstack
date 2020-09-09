@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue style</title>
+    <script src="../js/jquery-3.5.1.js"></script>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+
+        <p>4 v-if 销毁/ v-show 隐藏 : 显示/隐藏</p>
+        <div v-if="isIf">div1</div>
+        <div v-show="isShow">div2</div>
+
+        <p>3 v-for 循环对象 1.普通数组， 2.对象数组， 3.对象， 4.迭代数字</p>
+        <div v-for="userId in userIds">{{userId}}</div>
+        <div v-for="(user,i) in userList">id:{{user.id}}; name:{{user.name}}; index:{{i}}</div>
+        <div v-for="item in 5">{{item}}</div>
+        <div v-for="user in userInfo">{{user}}</div>
+        <div v-for="(value,key,i) in userInfo">value:{{value}}; key:{{key}}, index:{{i}}]}</div>
+        <select>
+            <option v-for="(user,i) in userList" :key="user.id">{{user.id}}-{{user.name}} @ {{i}}</option>
+        </select>
+        <button @click="addUser">添加人</button>
+        
+        <p>2 :style 1.键值对， 2.json，3.对象数组</p>
+        <p style="background-color: brown;">{{message}}</p>
+        <p :style="{'background-color':'brown'}">{{message}}</p>
+        <p :style="style1">{{message}}</p>
+        <p :style="[style1, style2]">{{message}}</p>
+        <input type="text" v-model="message">
+        <button @click="change">变</button>
+
+        <p>1 :class 绑定样式 1.数组，2.三元表达式，3.数组嵌套</p>
+        <p class="backg">{{message}}</p>
+        <p :class="'backg'">{{message}}</p>
+        <p :class="['backg', 'fontcolor_r']">{{message}}</p>
+        <p :class="['backg', flag?'fontcolor_r':'fontcolor_b']">{{message}}</p>
+        <!--<p :class="['backg', {'fontcolor_r':flag}]">{{message}}</p>-->
+
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+            el:"#app",
+            data:{
+                message:"Hello World",
+                flag: false,
+                style1:{'background-color':'brown', color:'white'},
+                style2:{"font-size":"18px"},
+                userIds:[1,2,3,4,5],
+                userList:[
+                    {id:1,name:"张三"},
+                    {id:2,name:"李四"},
+                    {id:3,name:"王五"},
+                    {id:4,name:"赵六"},
+                ],
+                userInfo:{id:1,name:"张三"},
+                isIf:true,
+                isShow:true
+            },
+            methods:{
+                change(){
+                    this.style2['font-size']='22px';
+                },
+                addUser(){
+                    this.userList.push({id:6,name:"田七2"});
+                    this.userList.unshift({id:5,name:"田七"});
+                }
+            }
+        });  
+</script>
+
+<style>
+    .backg{
+        background-color: aquamarine;
+    }
+    .fontcolor_r{
+        color:red;
+    }
+    .fontcolor_b{
+        color:blue;
+    }
+    .fontcolor_y{
+        color:yellow;
+    }
+</style>

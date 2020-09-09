@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info App</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <table>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Operation</th>
+            </tr>
+            <tr v-for="(user, index) in userList" :key="user.id" :class="{'oddstyle':isOdd(index)}">
+                <td>{{user.id}}</td>
+                <td v-text="user.name"></td>
+                <td @click="removeUser(index)">Delete -- {{index}}</td>
+            </tr>
+        </table>
+        <input type="text" v-model="id">
+        <input type="text" v-model="username">
+        <br>
+        <button @click="addUser">Add User</button>
+    </div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+            el:"#app",
+            data:{
+                userList:[
+                    {id:1,name:"张三"},
+                    {id:2,name:"李四"},
+                    {id:3,name:"王五"},
+                    {id:4,name:"赵六"},
+                ],
+                id:5,
+                username:""
+            },
+            methods:{
+                isOdd(index){
+                    var res=index%2;
+                    if(res==1){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                },
+                addUser(){
+                    this.userList.push({id:this.id++,name:this.username});
+                },
+                removeUser(index){
+                    this.userList.splice(index, 1);
+                }
+            }
+        });  
+</script>
+<style>
+    table{
+        width:600px;
+        border-collapse: collapse;
+    }
+    table th, table td{
+        border: 1px solid #000;
+    }
+    .oddstyle{
+        background-color: rgb(255,168,168);
+    }
+</style>
